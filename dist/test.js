@@ -1,3 +1,4 @@
+module.exports =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -42,9 +43,9 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/*!********************!*\
-  !*** ./src/lib.js ***!
-  \********************/
+/*!*********************!*\
+  !*** ./src/test.js ***!
+  \*********************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1608,4 +1609,4 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=bundle.js.map
+//# sourceMappingURL=test.js.map
