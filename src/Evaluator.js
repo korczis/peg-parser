@@ -17,9 +17,10 @@ class Evaluator {
     return this._parser;
   }
 
-  evaluate(expression, context = {}) {
+  evaluate(expression, context = {}, immediately = false) {
     this.parser.context = merge(true, defaultContext, context || {});
-    return this.parser.parse(expression);
+    const res = this.parser.parse(expression);
+    return immediately ? res() : res;
   }
 }
 
