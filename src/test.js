@@ -8,14 +8,22 @@ const context = {
   }
 };
 
-let compiled = evaluator.evaluate("$i", context);
+let compiled = evaluator.evaluate("min(1, 2)", context);
+console.log(compiled({
+  variables: {
+    i: 100
+  }
+}));
 
-const iterations = 1e7;
+// /*
+const iterations = 1e6;
 var start = new Date().getTime();
 for (var i = 0; i < iterations; i++) {
   compiled({
     variables: {
-      i
+      i,
+      j: 'Jirina',
+      k: 'Karel'
     }
   });
 }
@@ -33,3 +41,4 @@ console.log(compiled({
     name: 'Jaryn'
   }
 }));
+// */
