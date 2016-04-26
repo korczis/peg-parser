@@ -1,6 +1,6 @@
 {
   "name": "peg-parser",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Peg.js based expression parser",
   "main": "index.js",
   "scripts": {
