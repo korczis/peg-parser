@@ -1,4 +1,18 @@
 {
+ function extractList(list, index) {
+    var result = new Array(list.length), i;
+
+    for (i = 0; i < list.length; i++) {
+      result[i] = list[i][index];
+    }
+
+    return result;
+  }
+
+  function buildList(head, tail, index) {
+    return [head].concat(extractList(tail, index));
+  }
+
   function getVariable(name, context) {
     const variableName = name();
 
@@ -15,13 +29,29 @@
     return null;
   }
 
+  function getFunction(name, context) {
+      const functionName = name(context);
+
+      tmp = context[1] && context[1].functions && context[1].functions[functionName];
+      if (tmp) {
+        return tmp;
+      }
+
+      var tmp = context[0].functions && context[0].functions[functionName];
+      if (tmp) {
+        return tmp;
+      }
+
+      return null;
+    }
+
 	function makeString(val) {
     	return val.join('');
     }
 
     function makeNumber(val) {
     	return parseInt(val.join(''), 10);
-    }
+   }
 }
 
 root = re:root_elements {
@@ -42,22 +72,29 @@ whitespace = [ \t\r\n]
 whitespaces = whitespace+
 
 root_elements
-	= variable
+	= function
+  / variable
 	/ identifier
 	/ number
   / string
 
+function = name:identifier "(" params:formal_parameter_list? ")" {
+  return function(context) {
+    const fn = getFunction(name, context);
+    return fn(...params(context));
+  }
+}
 
 identifier = l:letter rest:[a-zA-Z0-9]* {
-  return function() {
-    return l.concat(makeString(rest));
+  return function(context) {
+   return l.concat(makeString(rest));
   }
 }
 
 digit = [0-9]
 number = val:digit+ {
 	return function(context) {
-    return makeString(val);
+    return makeNumber(val);
   }
 }
 
@@ -67,3 +104,21 @@ string = val:letter+ {
     return makeString(val);
   }
 }
+
+formal_parameter_list = head:root_elements tail:(__ "," __ root_elements)* {
+	return function(context) {
+	  return buildList(head, tail, 3).map((i) => i(context));
+	}
+}
+
+__ = (whitespace / line_terminator)*
+
+line_terminator
+  = [\n\r\u2028\u2029]
+
+line_terminator_sequence "end of line"
+  = "\n"
+  / "\r\n"
+  / "\r"
+  / "\u2028"
+  / "\u2029"
