@@ -1,0 +1,51 @@
+{
+	function getContext() {
+    return parser.context || {
+        variables: {
+            name: 'tomas',
+              temp: 42
+          }
+      };
+  }
+
+  function getVariables() {
+    return getContext().variables || {};
+  }
+
+  function getVariable(name) {
+    return getVariables()[name] || null;
+  }
+
+	function makeString(val) {
+    	return val.join('');
+    }
+
+    function makeNumber(val) {
+    	return parseInt(val.join(''), 10);
+    }
+}
+
+start
+	= variable
+    / number
+    / string
+    / whitespaces
+
+variable = (dollar l:string) {
+	return getVariable(l);
+}
+
+dollar = "$"
+
+whitespace = [ \t\r\n]
+whitespaces = whitespace+
+
+digit = [0-9]
+number = d:digit+ {
+	return makeNumber(d);
+}
+
+letter = [a-zA-Z]
+string = l:letter+ {
+	return makeString(l);
+}

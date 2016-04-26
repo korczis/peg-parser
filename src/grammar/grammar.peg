@@ -1,0 +1,69 @@
+{
+  function getVariable(name, context) {
+    const variableName = name();
+
+    tmp = context[1] && context[1].variables && context[1].variables[variableName];
+    if (tmp) {
+      return tmp;
+    }
+
+    var tmp = context[0].variables && context[0].variables[variableName];
+    if (tmp) {
+      return tmp;
+    }
+
+    return null;
+  }
+
+	function makeString(val) {
+    	return val.join('');
+    }
+
+    function makeNumber(val) {
+    	return parseInt(val.join(''), 10);
+    }
+}
+
+root = re:root_elements {
+  return function(context) {
+    return re([parser.context, context]);
+  }
+}
+
+variable = (dollar l:string) {
+	return function(context) {
+	  return getVariable(l, context);
+	}
+}
+
+dollar = "$"
+
+whitespace = [ \t\r\n]
+whitespaces = whitespace+
+
+root_elements
+	= variable
+	/ identifier
+	/ number
+  / string
+
+
+identifier = l:letter rest:[a-zA-Z0-9]* {
+  return function() {
+    return l.concat(makeString(rest));
+  }
+}
+
+digit = [0-9]
+number = val:digit+ {
+	return function(context) {
+    return makeString(val);
+  }
+}
+
+letter = [a-zA-Z]
+string = val:letter+ {
+	return function(context) {
+    return makeString(val);
+  }
+}

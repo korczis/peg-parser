@@ -1,0 +1,59 @@
+{
+	function makeInteger(val) {
+    	return parseInt(val.join(""));
+    }
+
+    function makeString(val) {
+    	return val.join("");
+    }
+
+    function calculate(operator, a, b) {
+    	if (operator == '+') {
+        	return a + b;
+        }
+
+        if (operator == '-') {
+        	return a - b;
+        }
+
+        if (operator == '*') {
+        	return a * b;
+        }
+
+        if (operator == '/') {
+        	return a / b;
+        }
+    }
+}
+
+expression
+	= operation
+    / integer
+
+plus     = "+"
+minus    = "-"
+multiply = "*"
+divide   = "/"
+
+operator
+	= plus
+    / minus
+    / multiply
+    / divide
+
+operation = (a:integer spaces o:operator spaces b:expression)  {
+	return calculate(o, a, b);
+}
+
+string = l:letters+ {
+	return makeString(l);
+}
+
+integer = d:digits+ {
+	return makeInteger(d);
+}
+
+digits  = [0-9]
+letters = [a-zA-Z]
+space = " "
+spaces = space+
