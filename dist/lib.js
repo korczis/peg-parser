@@ -110,9 +110,11 @@ module.exports =
 	    key: 'evaluate',
 	    value: function evaluate(expression) {
 	      var context = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+	      var immediately = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
 	
 	      this.parser.context = (0, _node2.default)(true, defaultContext, context || {});
-	      return this.parser.parse(expression);
+	      var res = this.parser.parse(expression);
+	      return immediately ? res() : res;
 	    }
 	  }, {
 	    key: 'parser',
