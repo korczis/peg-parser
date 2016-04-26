@@ -1,4 +1,10 @@
 export {
   and,
-  not
+  not,
+  or
 } from './logical';
+
+export {
+  max,
+  min
+} from './math';
