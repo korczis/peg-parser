@@ -2,17 +2,29 @@
 var path = require('path');
 var webpack = require('webpack');
 
+// Webpack plugins
+var CleanWebpackPlugin = require('clean-webpack-plugin');
+
 var BUILD_DIR = path.resolve(__dirname, 'dist');
 var APP_DIR = path.resolve(__dirname, 'src');
 
 var config = {
-  entry: APP_DIR + '/lib.js',
+  entry: {
+    lib: APP_DIR + '/lib.js',
+    test: APP_DIR + '/test.js'
+  },
+
   output: {
-    path: BUILD_DIR,
-    filename: 'bundle.js'
+    path: path.join(__dirname, "dist"),
+    filename: "[name].js",
+    libraryTarget: "commonjs2"
   },
 
   plugins: [
+    new CleanWebpackPlugin('dist', {
+      verbose: true
+    }),
+
     // optimizations
     /*
     new webpack.optimize.DedupePlugin(),
