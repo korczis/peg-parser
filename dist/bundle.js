@@ -112,7 +112,7 @@
 	
 	var functions = _interopRequireWildcard(_functions);
 	
-	var _grammar = __webpack_require__(/*! ./loader/loader!./grammar/grammar.peg */ 7);
+	var _grammar = __webpack_require__(/*! peg!./grammar/grammar.peg */ 7);
 	
 	var _grammar2 = _interopRequireDefault(_grammar);
 	
@@ -1082,9 +1082,9 @@
 
 /***/ },
 /* 7 */
-/*!********************************************************!*\
-  !*** ./src/loader/loader.js!./src/grammar/grammar.peg ***!
-  \********************************************************/
+/*!************************************************!*\
+  !*** ./~/peg-loader!./src/grammar/grammar.peg ***!
+  \************************************************/
 /***/ function(module, exports) {
 
 	module.exports = (function() {
