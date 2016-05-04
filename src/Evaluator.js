@@ -2,7 +2,7 @@ import merge from 'node.extend';
 
 import * as functions from './functions';
 
-import grammar from 'peg!./grammar/grammar.peg';
+const grammar = require('peg!./grammar/grammar.peg');
 
 const defaultContext = {
   functions
